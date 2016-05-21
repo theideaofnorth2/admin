@@ -17,5 +17,6 @@ exports.locals = {
 
 exports.nav = {
 	'cities': ['cities'],
+	'eggs': ['eggs'],
 	'interviews': ['interviews'],
 };

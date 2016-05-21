@@ -1,13 +1,13 @@
 {
   "name": "theideaofnorth2-admin",
   "version": "0.0.1",
-	"description": "Admin website for the project The Idea Of North 2.0",
+  "description": "Admin website for the project The Idea Of North 2.0",
   "main": "index.js",
   "scripts": {
-		"dev": "nodemon index.js",
+    "dev": "nodemon index.js",
     "start": "node index.js"
   },
-	"repository": {
+  "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/theideaofnorth2/theideaofnorth2-admin.git"
   },
