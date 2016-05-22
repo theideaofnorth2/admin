@@ -8,7 +8,7 @@ const Egg = new keystone.List('Egg', {
 
 Egg.add({
 	name: { type: String, required: true, index: true },
-	origin: { type: Types.Relationship, ref: 'City' },
+	origin: { type: Types.Relationship, ref: 'Citie' },
 	top: { type: Number, default: 0, label: 'Top (in %)' },
 	left: { type: Number, default: 0, label: 'Left (in %)' },
 });

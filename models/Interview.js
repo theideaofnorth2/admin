@@ -15,9 +15,9 @@ const Interview = new keystone.List('Interview', {
 Interview.add({
 	name: { type: String, required: true, index: true },
 	parent: { type: Types.Select, label: 'Parent type', options: 'location, egg' },
-	origin: { type: Types.Relationship, ref: 'City', dependsOn: { parent: 'location' },
+	origin: { type: Types.Relationship, ref: 'Citie', dependsOn: { parent: 'location' },
 		watch: true, value: definedIfOtherField('origin', 'parent', 'location') },
-	destination: { type: Types.Relationship, ref: 'City', dependsOn: { parent: 'location' },
+	destination: { type: Types.Relationship, ref: 'Citie', dependsOn: { parent: 'location' },
 		watch: true, value: definedIfOtherField('destination', 'parent', 'location') },
 	egg: { type: Types.Relationship, ref: 'Egg', dependsOn: { parent: 'egg' },
 		watch: true, value: definedIfOtherField('egg', 'parent', 'egg') },

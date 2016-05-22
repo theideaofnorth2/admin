@@ -3,11 +3,17 @@ const SuperPromise = require('../utils/tools');
 
 exports.init = (app) => {
 
-	const City = keystone.list('City');
+	const Citie = keystone.list('Citie');
+	const Egg = keystone.list('Egg');
 	const Interview = keystone.list('Interview');
 
 	const apiCities = (req, res, next) => {
-		City.model.getAll(req, res, next).then((cities) => {
+		Citie.model.getAll(req, res, next).then((cities) => {
+			res.apiResponse(cities);
+		});
+	}
+	const apiEggs = (req, res, next) => {
+		Egg.model.getAll(req, res, next).then((cities) => {
 			res.apiResponse(cities);
 		});
 	}
@@ -17,16 +23,18 @@ exports.init = (app) => {
 		});
 	}
 	const apiConfig = (req, res, next) => {
-		const cityPromise = City.model.getAll(req, res, next);
+		const citiePromise = Citie.model.getAll(req, res, next);
+		const eggPromise = Egg.model.getAll(req, res, next);
 		const interviewPromise = Interview.model.getAll(req, res, next);
-		Promise.all([cityPromise, interviewPromise]).then(results => {
-			res.apiResponse({ cities: results[0], interviews: results[1] });
+		Promise.all([citiePromise, eggPromise, interviewPromise]).then(results => {
+			res.apiResponse({ cities: results[0], eggs: results[1], interviews: results[2] });
 		})
 	}
 
 	app.get('/api*', keystone.middleware.api, keystone.middleware.cors);
 	app.get('/api/interviews', apiInterviews);
 	app.get('/api/cities', apiCities);
+	app.get('/api/eggs', apiEggs);
 	app.get('/api/config', apiConfig);
 
 }
