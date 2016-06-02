@@ -26,5 +26,5 @@
     "keystone": "github:keystonejs/keystone",
     "underscore": "^1.8.3",
     "jsftp": "^1.5.3"
-  },
+  }
 }
