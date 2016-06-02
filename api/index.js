@@ -1,5 +1,5 @@
 const keystone = require('keystone');
-const SuperPromise = require('../utils/tools');
+const { uploadConfig } = require('./ftp');
 
 exports.init = (app) => {
 
@@ -13,8 +13,8 @@ exports.init = (app) => {
 		});
 	}
 	const apiEggs = (req, res, next) => {
-		Egg.model.getAll(req, res, next).then((cities) => {
-			res.apiResponse(cities);
+		Egg.model.getAll(req, res, next).then((eggs) => {
+			res.apiResponse(eggs);
 		});
 	}
 	const apiInterviews = (req, res, next) => {
@@ -27,7 +27,10 @@ exports.init = (app) => {
 		const eggPromise = Egg.model.getAll(req, res, next);
 		const interviewPromise = Interview.model.getAll(req, res, next);
 		Promise.all([citiePromise, eggPromise, interviewPromise]).then(results => {
-			res.apiResponse({ cities: results[0], eggs: results[1], interviews: results[2] });
+			const config = { cities: results[0], eggs: results[1], interviews: results[2] };
+			uploadConfig(config).then(() => {
+				res.apiResponse(config);
+			})
 		})
 	}
 

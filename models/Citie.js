@@ -1,6 +1,6 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
-const SuperPromise = require('../utils/tools');
+const { SuperPromise } = require('../utils/tools');
 
 const Citie = new keystone.List('Citie', {
 	autokey: { from: 'name', path: 'key', unique: true },

@@ -1,6 +1,6 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
-const SuperPromise = require('../utils/tools');
+const { SuperPromise } = require('../utils/tools');
 
 function definedIfOtherField(thisField, otherField, otherValue) {
 	return function() {
@@ -29,16 +29,17 @@ Interview.add({
 		watch: true, value: definedIfOtherField('top', 'parent', 'egg') },
 	left: { type: Number, default: 0, dependsOn: { parent: 'egg' },
 		watch: true, value: definedIfOtherField('left', 'parent', 'egg') },
+	sound: { type: String, default: '', label: 'Sound file name' },
 });
 
 Interview.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
 	Interview.model
-		.find({}, 'key name parent origin destination egg lat lng top left')
+		.find({}, 'key name parent origin destination egg lat lng top left sound')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise
 };
 
-Interview.defaultColumns = 'name, parent';
+Interview.defaultColumns = 'name, key, parent, origin, destination';
 Interview.register();
