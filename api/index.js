@@ -3,13 +3,19 @@ const { uploadConfig } = require('./ftp');
 
 exports.init = (app) => {
 
-	const Citie = keystone.list('Citie');
+	const Origin = keystone.list('Origin');
+	const Destination = keystone.list('Destination');
 	const Egg = keystone.list('Egg');
 	const Interview = keystone.list('Interview');
 
-	const apiCities = (req, res, next) => {
-		Citie.model.getAll(req, res, next).then((cities) => {
-			res.apiResponse(cities);
+	const apiOrigins = (req, res, next) => {
+		Origin.model.getAll(req, res, next).then((origins) => {
+			res.apiResponse(origins);
+		});
+	}
+	const apiDestinations = (req, res, next) => {
+		Destination.model.getAll(req, res, next).then((destinations) => {
+			res.apiResponse(destinations);
 		});
 	}
 	const apiEggs = (req, res, next) => {
@@ -23,11 +29,12 @@ exports.init = (app) => {
 		});
 	}
 	const apiConfig = (req, res, next) => {
-		const citiePromise = Citie.model.getAll(req, res, next);
+		const originPromise = Origin.model.getAll(req, res, next);
+		const destinationPromise = Destination.model.getAll(req, res, next);
 		const eggPromise = Egg.model.getAll(req, res, next);
 		const interviewPromise = Interview.model.getAll(req, res, next);
-		Promise.all([citiePromise, eggPromise, interviewPromise]).then(results => {
-			const config = { cities: results[0], eggs: results[1], interviews: results[2] };
+		Promise.all([originPromise, destinationPromise, eggPromise, interviewPromise]).then(results => {
+			const config = { origins: results[0], destinations: results[1], eggs: results[2], interviews: results[3] };
 			uploadConfig(config).then(() => {
 				res.apiResponse(config);
 			})
@@ -36,7 +43,8 @@ exports.init = (app) => {
 
 	app.get('/api*', keystone.middleware.api, keystone.middleware.cors);
 	app.get('/api/interviews', apiInterviews);
-	app.get('/api/cities', apiCities);
+	app.get('/api/origins', apiOrigins);
+	app.get('/api/destinations', apiDestinations);
 	app.get('/api/eggs', apiEggs);
 	app.get('/api/config', apiConfig);
 

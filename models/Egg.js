@@ -8,19 +8,19 @@ const Egg = new keystone.List('Egg', {
 
 Egg.add({
 	name: { type: String, required: true, index: true },
-	origin: { type: Types.Relationship, ref: 'Citie' },
-	top: { type: Number, default: 0, label: 'Top (in %)' },
-	left: { type: Number, default: 0, label: 'Left (in %)' },
+	originId: { type: Types.Relationship, ref: 'Origin', label: 'Origin' },
+	lat: { type: Number, default: 0 },
+	lng: { type: Number, default: 0 },
 });
 
 Egg.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
 	Egg.model
-		.find({}, 'key name origin top left')
+		.find({}, 'key name originId lat lng')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise
 };
 
-Egg.defaultColumns = 'name, origin';
+Egg.defaultColumns = 'name, originId';
 Egg.register();

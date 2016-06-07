@@ -16,7 +16,8 @@ exports.locals = {
 };
 
 exports.nav = {
-	'cities': ['cities'],
+	'origins': ['origins'],
+	'destinations': ['destinations'],
 	'eggs': ['eggs'],
 	'interviews': ['interviews'],
 };

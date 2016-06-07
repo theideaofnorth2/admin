@@ -2,11 +2,11 @@ const keystone = require('keystone');
 const Types = keystone.Field.Types;
 const { SuperPromise } = require('../utils/tools');
 
-const Citie = new keystone.List('Citie', {
+const Destination = new keystone.List('Destination', {
 	autokey: { from: 'name', path: 'key', unique: true },
 });
 
-Citie.add({
+Destination.add({
 	name: { type: String, required: true, index: true },
 	lat: { type: Number, required: true, default: 0 },
 	lng: { type: Number, required: true, default: 0 },
@@ -14,14 +14,14 @@ Citie.add({
 	horizontal: { type: Types.Select, label: 'Horizontal alignment', options: 'left, center, right', default: 'center' },
 });
 
-Citie.schema.statics.getAll = (req, res, next) => {
+Destination.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
-	Citie.model
+	Destination.model
 		.find({}, 'key name lat lng vertical horizontal')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise
 };
 
-Citie.defaultColumns = 'name, lat, lng';
-Citie.register();
+Destination.defaultColumns = 'name, lat, lng';
+Destination.register();
