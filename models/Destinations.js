@@ -10,6 +10,7 @@ Destination.add({
 	name: { type: String, required: true, index: true },
 	lat: { type: Number, required: true, default: 0 },
 	lng: { type: Number, required: true, default: 0 },
+	image: { type: String, default: '', label: 'Cover image file name' },
 	vertical: { type: Types.Select, label: 'Vertical alignment', options: 'top, bottom', default: 'bottom' },
 	horizontal: { type: Types.Select, label: 'Horizontal alignment', options: 'left, center, right', default: 'center' },
 });
@@ -17,7 +18,7 @@ Destination.add({
 Destination.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
 	Destination.model
-		.find({}, 'key name lat lng vertical horizontal')
+		.find({}, 'key name lat lng image vertical horizontal')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise
