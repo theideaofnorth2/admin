@@ -5,3 +5,9 @@ module.exports.SuperPromise = () => {
 	});
 	return superPromise;
 };
+
+module.exports.definedIfOtherField = (thisField, otherField, otherValue) => {
+	return function() {
+		return this[otherField] === otherValue ? this[thisField] : undefined;
+	}
+};

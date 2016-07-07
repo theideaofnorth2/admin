@@ -20,4 +20,5 @@ exports.nav = {
 	'destinations': ['destinations'],
 	'eggs': ['eggs'],
 	'interviews': ['interviews'],
+	'stories': ['stories'],
 };

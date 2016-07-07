@@ -1,12 +1,6 @@
 const keystone = require('keystone');
 const Types = keystone.Field.Types;
-const { SuperPromise } = require('../utils/tools');
-
-function definedIfOtherField(thisField, otherField, otherValue) {
-	return function() {
-		return this[otherField] === otherValue ? this[thisField] : undefined;
-	}
-};
+const { definedIfOtherField, SuperPromise } = require('../utils/tools');
 
 const Interview = new keystone.List('Interview', {
 	autokey: { from: 'name', path: 'key', unique: true },
@@ -40,5 +34,5 @@ Interview.schema.statics.getAll = (req, res, next) => {
 	return superPromise.promise
 };
 
-Interview.defaultColumns = 'name, key, parent, originId, destinationId';
+Interview.defaultColumns = 'name, parent, originId, destinationId';
 Interview.register();
