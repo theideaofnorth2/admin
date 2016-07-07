@@ -7,7 +7,7 @@ exports.init = (app) => {
 	const Destination = keystone.list('Destination');
 	const Egg = keystone.list('Egg');
 	const Interview = keystone.list('Interview');
-	const Storie = keystone.list('Storie');
+	const Guide = keystone.list('Guide');
 
 	const apiOrigins = (req, res, next) => {
 		Origin.model.getAll(req, res, next).then((origins) => {
@@ -29,9 +29,9 @@ exports.init = (app) => {
 			res.apiResponse(interviews);
 		});
 	}
-	const apiStories = (req, res, next) => {
-		Storie.model.getAll(req, res, next).then((stories) => {
-			res.apiResponse(stories);
+	const apiGuides = (req, res, next) => {
+		Guide.model.getAll(req, res, next).then((guides) => {
+			res.apiResponse(guides);
 		});
 	}
 	const apiConfig = (req, res, next) => {
@@ -39,9 +39,9 @@ exports.init = (app) => {
 		const destinationPromise = Destination.model.getAll(req, res, next);
 		const eggPromise = Egg.model.getAll(req, res, next);
 		const interviewPromise = Interview.model.getAll(req, res, next);
-		const storiePromise = Storie.model.getAll(req, res, next);
-		Promise.all([originPromise, destinationPromise, eggPromise, interviewPromise, storiePromise]).then(results => {
-			const config = { origins: results[0], destinations: results[1], eggs: results[2], interviews: results[3], stories: results[4] };
+		const guidePromise = Guide.model.getAll(req, res, next);
+		Promise.all([originPromise, destinationPromise, eggPromise, interviewPromise, guidePromise]).then(results => {
+			const config = { origins: results[0], destinations: results[1], eggs: results[2], interviews: results[3], guides: results[4] };
 			uploadConfig(config).then(() => {
 				res.apiResponse(config);
 			})
@@ -49,7 +49,7 @@ exports.init = (app) => {
 	}
 
 	app.get('/api*', keystone.middleware.api, keystone.middleware.cors);
-	app.get('/api/stories', apiStories);
+	app.get('/api/guides', apiGuides);
 	app.get('/api/interviews', apiInterviews);
 	app.get('/api/origins', apiOrigins);
 	app.get('/api/destinations', apiDestinations);

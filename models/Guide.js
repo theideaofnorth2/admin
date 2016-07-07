@@ -2,13 +2,13 @@ const keystone = require('keystone');
 const Types = keystone.Field.Types;
 const { definedIfOtherField, SuperPromise } = require('../utils/tools');
 
-const Storie = new keystone.List('Storie', {
+const Guide = new keystone.List('Guide', {
 	autokey: { from: 'view', path: 'key', unique: true },
 	map: { name: 'view' },
 	sortable: true,
 });
 
-Storie.add({
+Guide.add({
 	view: { type: Types.Select, initial: true, required: true, label: 'View type', options: 'main, origin, egg, interview' },
 	originId: { type: Types.Relationship, ref: 'Origin', label: 'Origin', dependsOn: { view: 'origin' },
 		watch: true, value: definedIfOtherField('originId', 'view', 'origin') },
@@ -18,14 +18,14 @@ Storie.add({
 		watch: true, value: definedIfOtherField('interviewId', 'view', 'interview') },
 });
 
-Storie.schema.statics.getAll = (req, res, next) => {
+Guide.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
-	Storie.model
+	Guide.model
 		.find({}, 'key view originId eggId interviewId sortOrder')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise
 };
 
-Storie.defaultColumns = 'view, originId, eggId, interviewId';
-Storie.register();
+Guide.defaultColumns = 'view, originId, eggId, interviewId';
+Guide.register();
