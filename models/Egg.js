@@ -12,7 +12,7 @@ Egg.add({
 	lat: { type: Number, default: 0 },
 	lng: { type: Number, default: 0 },
 	image: { type: String, default: '', label: 'Icon image file name' },
-	video: { type: String, default: '', label: 'Background video file name' },
+	video: { type: String, default: '', label: 'Video ID on Youtube' },
 });
 
 Egg.schema.statics.getAll = (req, res, next) => {
