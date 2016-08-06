@@ -11,7 +11,8 @@ Interview.add({
 	originId: { type: Types.Relationship, ref: 'Origin', label: 'Origin' },
 	destinationId: { type: Types.Relationship, ref: 'Destination', label: 'Destination' },
 	sound: { type: String, default: '', label: 'Sound file name' },
-	image: { type: String, default: '', label: 'Cover image file name' },
+	themes: { type: Types.Textarea, default: '', label: 'Themes' },
+	image: { type: String, default: '', label: 'Image directory' },
 	parent: { type: Types.Select, label: 'Displayed in', options: 'origin, egg' },
 	eggId: { type: Types.Relationship, ref: 'Egg', label: 'Egg', dependsOn: { parent: 'egg' },
 		watch: true, value: definedIfOtherField('eggId', 'parent', 'egg') },
@@ -28,7 +29,7 @@ Interview.add({
 Interview.schema.statics.getAll = (req, res, next) => {
 	const superPromise = SuperPromise();
 	Interview.model
-		.find({}, 'key name originId destinationId sound image parent eggId lat lng top left')
+		.find({}, 'key name originId destinationId sound themes image parent eggId lat lng top left')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise

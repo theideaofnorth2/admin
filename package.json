@@ -27,5 +27,7 @@
     "underscore": "^1.8.3",
     "jsftp": "^1.5.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^3.2.2"
+  }
 }
