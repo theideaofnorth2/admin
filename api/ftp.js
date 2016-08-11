@@ -1,4 +1,4 @@
-const JSFtp = require("jsftp");
+const JSFtp = require('jsftp');
 const { SuperPromise } = require('../utils/tools');
 
 module.exports.uploadConfig = (config) => {
@@ -8,7 +8,7 @@ module.exports.uploadConfig = (config) => {
 		port: 21,
 		user: process.env.FTP_USER,
 		pass: process.env.FTP_PASS,
-		debugMode: true
+		debugMode: true,
 	});
 	const configJson = JSON.stringify(config);
 	const buffer = new Buffer(configJson, 'binary');
@@ -16,10 +16,9 @@ module.exports.uploadConfig = (config) => {
 		if (err) {
 			console.error(err);
 			superPromise.reject();
-		}
-		else {
+		} else {
 			superPromise.resolve();
 		}
 	});
 	return superPromise.promise;
-}
+};

@@ -15,13 +15,13 @@ Egg.add({
 	video: { type: String, default: '', label: 'Video ID on Youtube' },
 });
 
-Egg.schema.statics.getAll = (req, res, next) => {
+Egg.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Egg.model
 		.find({}, 'key name originId lat lng image video')
 		.exec()
 		.then(superPromise.resolve);
-	return superPromise.promise
+	return superPromise.promise;
 };
 
 Egg.defaultColumns = 'name, originId';

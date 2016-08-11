@@ -11,17 +11,26 @@ Destination.add({
 	lat: { type: Number, required: true, default: 0 },
 	lng: { type: Number, required: true, default: 0 },
 	image: { type: String, default: '', label: 'Cover image file name' },
-	vertical: { type: Types.Select, label: 'Vertical alignment', options: 'top, bottom', default: 'top' },
-	horizontal: { type: Types.Select, label: 'Horizontal alignment', options: 'left, center, right', default: 'center' },
+	vertical: {
+		type: Types.Select,
+		label: 'Vertical alignment',
+		options: 'top, bottom',
+		default: 'top',
+	},
+	horizontal: {
+		type: Types.Select,
+		label: 'Horizontal alignment',
+		options: 'left, center, right',
+		default: 'center' },
 });
 
-Destination.schema.statics.getAll = (req, res, next) => {
+Destination.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Destination.model
 		.find({}, 'key name lat lng image vertical horizontal')
 		.exec()
 		.then(superPromise.resolve);
-	return superPromise.promise
+	return superPromise.promise;
 };
 
 Destination.defaultColumns = 'name, lat, lng';

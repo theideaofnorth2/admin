@@ -26,13 +26,13 @@ Interview.add({
 		watch: true, value: definedIfOtherField('left', 'parent', 'egg') },
 });
 
-Interview.schema.statics.getAll = (req, res, next) => {
+Interview.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Interview.model
 		.find({}, 'key name originId destinationId sound themes image parent eggId lat lng top left')
 		.exec()
 		.then(superPromise.resolve);
-	return superPromise.promise
+	return superPromise.promise;
 };
 
 Interview.defaultColumns = 'name, parent, originId, destinationId';
