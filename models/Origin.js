@@ -16,7 +16,8 @@ Origin.add({
 	horizontal: { type: Types.Select, label: 'Horizontal alignment',
 		options: 'left, center, right', default: 'center',
 	},
-	zoom: { type: Types.Select, label: 'Zoom level', options: '13, 14', default: '13' },
+	zoom: { type: Types.Select, numeric: true, label: 'Zoom level',
+		options: '13, 14', default: '13' },
 });
 
 Origin.schema.statics.getAll = () => {
