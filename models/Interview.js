@@ -8,11 +8,10 @@ const Interview = new keystone.List('Interview', {
 
 Interview.add({
 	name: { type: String, required: true, index: true },
+	customId: { type: String, default: '', label: 'custom ID' },
+	sound: { type: String, default: '', label: 'Sound file name' },
 	originId: { type: Types.Relationship, ref: 'Origin', label: 'Origin' },
 	destinationId: { type: Types.Relationship, ref: 'Destination', label: 'Destination' },
-	sound: { type: String, default: '', label: 'Sound file name' },
-	themes: { type: Types.Textarea, default: '', label: 'Themes' },
-	image: { type: String, default: '', label: 'Image directory' },
 	parent: { type: Types.Select, label: 'Displayed in', options: 'origin, egg' },
 	eggId: { type: Types.Relationship, ref: 'Egg', label: 'Egg', dependsOn: { parent: 'egg' },
 		watch: true, value: definedIfOtherField('eggId', 'parent', 'egg') },
@@ -29,7 +28,7 @@ Interview.add({
 Interview.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Interview.model
-		.find({}, 'key name originId destinationId sound themes image parent eggId lat lng top left')
+		.find({}, 'key customId name originId destinationId sound parent eggId lat lng top left')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise;
