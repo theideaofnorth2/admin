@@ -8,8 +8,8 @@ const Destination = new keystone.List('Destination', {
 
 Destination.add({
 	name: { type: String, required: true, index: true },
-	lat: { type: Number, required: true, default: 0 },
-	lng: { type: Number, required: true, default: 0 },
+	lat: { type: Number, default: 0 },
+	lng: { type: Number, default: 0 },
 	image: { type: String, default: '', label: 'Cover image file name' },
 	vertical: {
 		type: Types.Select,
