@@ -33,7 +33,7 @@ exports.init = (app) => {
 			res.apiResponse(guides);
 		});
 	};
-	const apiConfig = (req, res, next) => {
+	const saveConfig = (req, res, next) => {
 		const originPromise = Origin.model.getAll(req, res, next);
 		const destinationPromise = Destination.model.getAll(req, res, next);
 		const eggPromise = Egg.model.getAll(req, res, next);
@@ -46,10 +46,10 @@ exports.init = (app) => {
 					destinations: results[1],
 					eggs: results[2],
 					interviews: results[3],
-					guides: results[4]
+					guides: results[4],
 				};
 				uploadConfig(config).then(() => {
-					res.apiResponse(config);
+					console.log('uploaded');
 				});
 			});
 	};
@@ -60,5 +60,10 @@ exports.init = (app) => {
 	app.get('/api/origins', apiOrigins);
 	app.get('/api/destinations', apiDestinations);
 	app.get('/api/eggs', apiEggs);
-	app.get('/api/config', apiConfig);
+
+	[Origin, Destination, Egg, Interview, Guide].forEach(Model =>
+		Model.schema.post('save', doc => {
+			saveConfig();
+			console.log('%s has been saved', doc._id);
+		}));
 };
