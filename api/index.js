@@ -62,8 +62,5 @@ exports.init = (app) => {
 	app.get('/api/eggs', apiEggs);
 
 	[Origin, Destination, Egg, Interview, Guide].forEach(Model =>
-		Model.schema.post('save', doc => {
-			saveConfig();
-			console.log('%s has been saved', doc._id);
-		}));
+		Model.schema.post('save', () => saveConfig()));
 };
