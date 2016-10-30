@@ -24,7 +24,7 @@ Origin.add({
 Origin.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Origin.model
-		.find({}, 'key name lat lng vertical horizontal zoom')
+		.find({}, 'key name lat lng image vertical horizontal zoom')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise;
