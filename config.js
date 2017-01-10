@@ -21,4 +21,5 @@ exports.nav = {
 	eggs: ['eggs'],
 	interviews: ['interviews'],
 	guides: ['guides'],
+	pages: ['pages'],
 };

@@ -1,6 +1,6 @@
 const nodemon = require('nodemon');
 
 nodemon({
-  script: 'index.js',
-  ext: 'js json',
+	script: 'index.js',
+	ext: 'js json',
 });

@@ -7,6 +7,7 @@ exports.init = (app) => {
 	const Egg = keystone.list('Egg');
 	const Interview = keystone.list('Interview');
 	const Guide = keystone.list('Guide');
+	const Page = keystone.list('Page');
 
 	const apiOrigins = (req, res, next) => {
 		Origin.model.getAll(req, res, next).then((origins) => {
@@ -33,13 +34,26 @@ exports.init = (app) => {
 			res.apiResponse(guides);
 		});
 	};
+	const apiPages = (req, res, next) => {
+		Page.model.getAll(req, res, next).then((pages) => {
+			res.apiResponse(pages);
+		});
+	};
 	const saveConfig = (req, res, next) => {
 		const originPromise = Origin.model.getAll(req, res, next);
 		const destinationPromise = Destination.model.getAll(req, res, next);
 		const eggPromise = Egg.model.getAll(req, res, next);
 		const interviewPromise = Interview.model.getAll(req, res, next);
 		const guidePromise = Guide.model.getAll(req, res, next);
-		Promise.all([originPromise, destinationPromise, eggPromise, interviewPromise, guidePromise])
+		const pagePromise = Page.model.getAll(req, res, next);
+		Promise.all([
+			originPromise,
+			destinationPromise,
+			eggPromise,
+			interviewPromise,
+			guidePromise,
+			pagePromise,
+		])
 			.then(results => {
 				const config = {
 					origins: results[0],
@@ -47,6 +61,7 @@ exports.init = (app) => {
 					eggs: results[2],
 					interviews: results[3],
 					guides: results[4],
+					pages: results[5],
 				};
 				uploadConfig(config).then(() => {
 					console.log('uploaded');
@@ -55,12 +70,13 @@ exports.init = (app) => {
 	};
 
 	app.get('/api*', keystone.middleware.api, keystone.middleware.cors);
+	app.get('/api/pages', apiPages);
 	app.get('/api/guides', apiGuides);
 	app.get('/api/interviews', apiInterviews);
 	app.get('/api/origins', apiOrigins);
 	app.get('/api/destinations', apiDestinations);
 	app.get('/api/eggs', apiEggs);
 
-	[Origin, Destination, Egg, Interview, Guide].forEach(Model =>
+	[Origin, Destination, Egg, Interview, Guide, Page].forEach(Model =>
 		Model.schema.post('save', () => saveConfig()));
 };
