@@ -8,6 +8,7 @@ const Origin = new keystone.List('Origin', {
 
 Origin.add({
 	name: { type: String, required: true, index: true },
+	nativeName: { type: String, label: 'Native name' },
 	lat: { type: Number, required: true, default: 0 },
 	lng: { type: Number, required: true, default: 0 },
 	image: { type: String, default: '', label: 'Cover image file name' },
@@ -24,7 +25,7 @@ Origin.add({
 Origin.schema.statics.getAll = () => {
 	const superPromise = SuperPromise();
 	Origin.model
-		.find({}, 'key name lat lng image vertical horizontal zoom')
+		.find({}, 'key name nativeName lat lng image vertical horizontal zoom')
 		.exec()
 		.then(superPromise.resolve);
 	return superPromise.promise;
