@@ -28,11 +28,13 @@
     "jsftp": "^1.5.3"
   },
   "devDependencies": {
+    "directus-sdk-javascript": "^2.3.1",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
-    "nodemon": "^1.10.2"
+    "nodemon": "^1.10.2",
+    "request": "^2.83.0"
   }
 }
