@@ -1,7 +1,6 @@
 const keystone = require('keystone');
-const request = require('request');
 const { uploadConfig } = require('./ftp');
-const DirectusRemoteInstance = require('directus-sdk-javascript/remote');
+const { apiExport } = require('./export');
 
 exports.init = app => {
   const Origin = keystone.list('Origin');
@@ -82,42 +81,6 @@ exports.init = app => {
   app.get('/api/eggs', apiEggs);
   app.get('/api/config', apiConfig);
 
-  /*
-    Export tool
-    Sorry Keystonejs, you had me wait toooooo looooong for a release
-    Aint got love for you anymore :( leaving you for PHP!
-  */
-
-  const directusApiUri = 'http://theideaofnorth2.com/admin/api/1.1/';
-
-  const authRequestPayload = {
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    url: `${directusApiUri}auth/request-token`,
-    form: {
-      email: process.env.DIRECTUS_EMAIL,
-      password: process.env.DIRECTUS_PASSWORD,
-    },
-  };
-
-  const getDirectusToken = () =>
-    new Promise((resolve, reject) => {
-      request.post(authRequestPayload, (error, response, body) => {
-        resolve(JSON.parse(body).data.token);
-      });
-    });
-
-  const apiExport = async (req, res, next) => {
-    // Page.model.getAll(req, res, next).then(pages => {
-    //   res.apiResponse(pages);
-    // });
-    const token = await getDirectusToken();
-    const directusClient = new DirectusRemoteInstance({
-      url: directusApiUri,
-      accessToken: [token],
-    });
-    const origins = await directusClient.getItems('origins');
-    res.apiResponse({ origins });
-  };
-
   app.get('/api/export', apiExport);
+
 };
