@@ -40,11 +40,6 @@ exports.init = app => {
       res.apiResponse(pages);
     });
   };
-  const apiConfig = (req, res, next) => {
-    saveConfig().then(() => {
-      res.send('Config uploaded to server');
-    });
-  };
   const saveConfig = (req, res, next) => {
     const originPromise = Origin.model.getAll(req, res, next);
     const destinationPromise = Destination.model.getAll(req, res, next);
@@ -71,6 +66,11 @@ exports.init = app => {
       return uploadConfig(config);
     });
   };
+  const apiConfig = (req, res) => {
+    saveConfig().then(() => {
+      res.send('Config uploaded to server');
+    });
+  };
 
   app.get('/api*', keystone.middleware.api, keystone.middleware.cors);
   app.get('/api/pages', apiPages);
@@ -82,5 +82,4 @@ exports.init = app => {
   app.get('/api/config', apiConfig);
 
   app.get('/api/export', apiExport);
-
 };
