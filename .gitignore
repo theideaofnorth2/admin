@@ -2,6 +2,7 @@ npm-debug.log*
 node_modules
 .npm
 .node_repl_history
+.DS_Store
 
 # Custom additions
 api/config.json
